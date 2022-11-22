@@ -1,0 +1,61 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<h1>This is the list book from library view</h1>
+
+<table class="table">
+    {% if context %}
+    <thead>
+        <tr>
+            <th>Isbn</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Category</th>
+            <th>Author</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for b in context %}
+
+        <tr>
+            <td>{{ b.isbn }}</td>
+            <td>{{ b.title }}</td>
+            <td>{{ b.year }}</td>
+            <td>
+                {% for c in b.category.all %}
+                {{ c.name }}
+                <br>
+                {% endfor %}
+            </td>
+            <td>
+                {{b.author}}
+            </td>
+            <td>
+                <div class="d-flex">
+                    <form action="{% url 'book_deleted' %}" method="post" class="me-2">
+                        {% csrf_token %}
+                        <input type="text" value="{{ b.isbn }}" name="isbn" hidden>
+                        <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                    </form>
+                    <form action="{% url 'book_edit' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" value="{{ b.isbn }}" name="isbn" hidden>
+                        <button class="btn btn-warning"><i class="bi bi-pencil-square"></i></button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+
+        {% endfor%}
+
+        {% else %}
+
+        <h3>There are no books in the library</h3>
+
+        {% endif%}
+    </tbody>
+</table>
+
+{% endblock %}
