@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+{% if object %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Estas seguro que deseas eliminar "{{ object }}"?</p>
+    <button type="submit" class="btn btn-primary">Si, borrar</button>
+</form>
+
+{% endif %}
+
+{% endblock %}

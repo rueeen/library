@@ -5,7 +5,7 @@
 <h1>This is the list book from library view</h1>
 
 <table class="table">
-    {% if context %}
+  
     <thead>
         <tr>
             <th>Isbn</th>
@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for b in context %}
+        {% for b in book_list %}
 
         <tr>
             <td>{{ b.isbn }}</td>
@@ -34,27 +34,14 @@
             </td>
             <td>
                 <div class="d-flex">
-                    <form action="{% url 'book_deleted' %}" method="post" class="me-2">
-                        {% csrf_token %}
-                        <input type="text" value="{{ b.isbn }}" name="isbn" hidden>
-                        <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
-                    </form>
-                    <form action="{% url 'book_edit' %}" method="post">
-                        {% csrf_token %}
-                        <input type="text" value="{{ b.isbn }}" name="isbn" hidden>
-                        <button class="btn btn-warning"><i class="bi bi-pencil-square"></i></button>
-                    </form>
+                    <a class="btn btn-danger" href="{% url 'book_deleted' b.isbn %}"><i class="bi bi-trash"></i></a>               
+                    <a class="btn btn-warning" href="{% url 'book_edit' b.isbn %}"><i class="bi bi-pencil-square"></i></a>
                 </div>
             </td>
         </tr>
 
         {% endfor%}
 
-        {% else %}
-
-        <h3>There are no books in the library</h3>
-
-        {% endif%}
     </tbody>
 </table>
 
